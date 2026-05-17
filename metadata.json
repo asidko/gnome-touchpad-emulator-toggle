@@ -1,0 +1,8 @@
+{
+  "uuid": "touchpad-emulator@local",
+  "name": "Touchpad Emulator Toggle",
+  "description": "Quick Settings tile to start/stop TouchpadEmulator.",
+  "shell-version": ["45", "46", "47", "48", "49", "50"],
+  "url": "",
+  "version": 1
+}
