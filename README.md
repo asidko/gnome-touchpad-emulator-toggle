@@ -37,12 +37,9 @@ The tile appears in Quick Settings as **Touchpad Mode**.
 
 ## How it works
 
-- Spawns `/usr/bin/TouchpadEmulator` directly via `Gio.Subprocess` — no bash wrapper.
-- `wait_async` on the child PID is the single source of truth for tile state. When TouchpadEmulator exits (for any reason — clean stop, crash, external kill), the tile auto-greys.
-- Stopping the tile sends `SIGTERM` to the held subprocess handle — no `pkill -f` scanning, no chance of matching the wrong process.
-- One-shot `pgrep` at startup to "adopt" any TouchpadEmulator that was started outside the tile (e.g. autostart). In that case `_stop` falls back to `pkill -f`.
-
-No polling, no cooldowns, no race conditions with user taps.
+- Spawns `/usr/bin/TouchpadEmulator` directly via `Gio.Subprocess`. `wait_async` on the child is the single source of truth for tile state — if the process exits for any reason, the tile auto-greys.
+- Stop sends `SIGTERM` to the held subprocess handle, so there's no `pkill` scanning and no chance of killing the wrong process.
+- A one-shot `pgrep` at startup adopts any TouchpadEmulator started outside the tile (e.g. autostart); for that case only, stop falls back to `pkill -f`.
 
 ## Notes for postmarketOS / Snapdragon devices
 
